@@ -13,19 +13,27 @@ for index, row in df.iterrows():
 
     pdf.set_font(family="Times", style="B", size=24)
     pdf.set_text_color(100, 100, 100)
-    pdf.cell(w=0, h=12, txt=row['Topic'], align="L", ln=1)
+    pdf.cell(w=150, h=12, txt=row['Topic'], align="L")
+    pdf.cell(w=30, h=12, txt=r'Notes', align="R", ln=1)
 
-    pdf.set_draw_color(100, 100, 100)
-    pdf.line(10, 22, 200, 22)
-    pdf.set_draw_color(190, 234, 254)
-    pdf.line(25, 25, 25, 200)
+    for y in range(20, 298, 10):
+        pdf.set_draw_color(100, 100, 100)
+        pdf.line(10, y, 210, y)
+
+    rows = list(range(15, 170, 10))
+    for i,  x in enumerate(rows):
+        if i != len(rows) - 1:
+            pdf.set_draw_color(237, 237, 237)
+            pdf.dashed_line(x, 20, x, 290, dash_length=1, space_length=1)
+        else:
+            pdf.set_draw_color(100, 100, 100)
+            pdf.line(x, 20, x, 290)
 
     # fOOTER FOR MASTER PAGE
     pdf.ln(265)
     pdf.set_font(family="Times", style="I", size=8)
     pdf.set_text_color(180, 180, 180)
     pdf.cell(w=0, h=10, txt=row['Topic'], align="R")
-
 
     for i in range(row['Pages'] - 1):
         pdf.add_page()
@@ -34,6 +42,19 @@ for index, row in df.iterrows():
         pdf.set_font(family="Times", style="I", size=8)
         pdf.set_text_color(180, 180, 180)
         pdf.cell(w=0, h=10, txt=row['Topic'], align="R")
+
+        for y in range(20, 298, 10):
+            pdf.set_draw_color(100, 100, 100)
+            pdf.line(10, y, 210, y)
+
+        rows = list(range(15, 170, 10))
+        for i, x in enumerate(rows):
+            if i != len(rows) - 1:
+                pdf.set_draw_color(237, 237, 237)
+                pdf.dashed_line(x, 20, x, 290, dash_length=1, space_length=1)
+            else:
+                pdf.set_draw_color(100, 100, 100)
+                pdf.line(x, 20, x, 290)
 
 
 pdf.output("output.pdf")
